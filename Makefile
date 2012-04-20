@@ -16,7 +16,7 @@ clean: dropdb
 	rm -rf bin lib include man share build .Python
 
 serve:
-	$(ACTIVATE) && foreman start -p 5000
+	$(ACTIVATE) && $(ENV) foreman start -p 5000
 
 shell:
 	$(ACTIVATE) && DATABASE_URL=$(DATABASE_URL) ipython

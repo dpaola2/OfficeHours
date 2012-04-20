@@ -1,4 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>Hello, world!</h1>
+<h1>Office Hours</h1>
+{% for day in days %}
+  <p>
+    {{ day.label }}
+    <ul>
+      {% for slot in day.slots %}
+      <li>{{ slot.label }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+{% endfor %}
 {% endblock %}

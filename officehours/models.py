@@ -19,6 +19,10 @@ class Day(Base):
     def __repr__(self):
         return "<Day %s>" % str(self.date)
 
+    @property
+    def label(self):
+        return self.date.strftime("%a %B %d")
+
     @staticmethod
     def days_ahead(limit):
         sess = Session()
@@ -37,6 +41,10 @@ class Slot(Base):
 
     def __repr__(self):
         return "<Slot %s for day: %s>" % (self.id, str(self.day.date))
+
+    @property
+    def label(self):
+        return self.when.strftime("%I:%M %p")
 
     @staticmethod
     def from_datetime(when):
