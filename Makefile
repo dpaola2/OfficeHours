@@ -17,5 +17,8 @@ deploy:
 createdb:
 	createdb $(DATABASE_NAME)
 
+dropdb:
+	dropdb $(DATABASE_NAME)
+
 test:
 	source bin/activate && python test.py
