@@ -16,3 +16,6 @@ deploy:
 
 createdb:
 	createdb $(DATABASE_NAME)
+
+test:
+	source bin/activate && python test.py

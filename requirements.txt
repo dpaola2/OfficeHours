@@ -3,4 +3,6 @@ Jinja2==2.6
 SQLAlchemy==0.7.6
 Werkzeug==0.8.3
 ipython==0.12
+nose==1.1.2
+readline==6.2.2
 wsgiref==0.1.2
