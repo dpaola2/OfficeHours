@@ -1,10 +1,10 @@
-import os
+import os, logging
 
-from sqlalchemy import Column, String, Integer, create_engine, Date, ForeignKey, DateTime
+from sqlalchemy import Column, String, Integer, create_engine, Date, ForeignKey, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
 
-engine = create_engine(os.environ.get('DATABASE_URL'), echo = True)
+engine = create_engine(os.environ.get('DATABASE_URL'), echo = False)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
@@ -34,6 +34,10 @@ class Slot(Base):
     day_id = Column(Integer, ForeignKey('days.id'))
     day = relationship("Day", backref = backref('slots', order_by=id))
     when = Column(DateTime, unique = True)
+    reserved = Column(Boolean)
+    reserved_by = Column(String(50))
+    email = Column(String(50))
+    skype = Column(String(50))
 
     def __init__(self, day, when):
         self.day = day
@@ -41,6 +45,12 @@ class Slot(Base):
 
     def __repr__(self):
         return "<Slot %s for day: %s>" % (self.id, str(self.day.date))
+
+    def reserve(self, attrs):
+        self.reserved = True
+        self.reserved_by = attrs.get('name')
+        self.skype = attrs.get('skype')
+        self.name = attrs.get('name')
 
     @property
     def label(self):
@@ -58,3 +68,4 @@ class Slot(Base):
         sess.add(slot)
         sess.commit()
         return slot
+        

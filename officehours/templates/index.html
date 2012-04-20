@@ -1,14 +1,57 @@
 {% extends "layout.html" %}
+{% block css %}
+ul {
+  list-style: none;
+}
+{% endblock %}
 {% block body %}
 <h1>Office Hours</h1>
+<table>
+  <tr>
+    <th>When</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Skype</th>
+    <th></th>
+  </tr>
 {% for day in days %}
-  <p>
-    {{ day.label }}
-    <ul>
-      {% for slot in day.slots %}
-      <li>{{ slot.label }}</li>
-      {% endfor %}
-    </ul>
-  </p>
+  <tr>
+    <th>
+      {{ day.label }}
+    </th>
+  </tr>
+  {% for slot in day.slots %}
+  {% if slot.reserved %}
+  <tr>
+    <td>
+      {{ slot.label }}
+    </td>
+    <td>
+      {{ slot.reserved_by }}
+    </td>
+  </tr>
+  {% else %}
+  <tr>
+    <form action="/reserve/{{ slot.id }}" method="POST">
+      <td>
+        {{ slot.label }}
+      </td>
+      <td>
+        <input type="text" name="name" />
+      </td>
+      <td>
+        <input type="text" name="email" />
+      </td>
+      <td>
+        <input type="text" name="skype" />
+      </td>
+      <td>
+        <input type="submit" value="Reserve" />
+      </td>
+    </form>
+    {% endif %}
+    {% endfor %}
+  </tr>
 {% endfor %}
+</table>
 {% endblock %}

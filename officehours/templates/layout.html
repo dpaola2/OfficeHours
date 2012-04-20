@@ -1,6 +1,9 @@
 <!doctype html>
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <style type="text/css">
+    {% block css %}{% endblock %}
+  </style>
 </head>
 <body>
   {% for message in get_flashed_messages() %}
