@@ -3,7 +3,7 @@ DATABASE_URL = postgresql://admin@localhost/$(DATABASE_NAME)
 MIGRATIONS_REPO = migrations
 MIGRATE_PATH = migrations/manage.py
 
-all: virtualenv install
+all: virtualenv install createdb migrate
 
 virtualenv:
 	virtualenv --no-site-packages .
@@ -11,8 +11,14 @@ virtualenv:
 install:
 	source bin/activate && pip install -r requirements.txt
 
+clean: dropdb
+	rm -rf bin lib include man share .Python
+
 serve:
 	source bin/activate && foreman start -p 5000
+
+shell:
+	source bin/activate && DATABASE_URL=$(DATABASE_URL) ipython
 
 deploy:
 	git push heroku master

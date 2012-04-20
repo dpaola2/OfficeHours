@@ -4,7 +4,7 @@ from sqlalchemy import Column, String, Integer, create_engine, Date, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
 
-engine = create_engine(os.environ.get('DATABASE_URL', 'sqlite:///:memory:'), echo = True)
+engine = create_engine(os.environ.get('DATABASE_URL'), echo = True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
