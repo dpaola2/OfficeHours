@@ -1,9 +1,12 @@
 Flask==0.8
 Jinja2==2.6
 SQLAlchemy==0.7.6
+Tempita==0.5.1
 Werkzeug==0.8.3
+decorator==3.3.2
 ipython==0.12
 nose==1.1.2
 psycopg2==2.4.5
 readline==6.2.2
+sqlalchemy-migrate==0.7.2
 wsgiref==0.1.2
