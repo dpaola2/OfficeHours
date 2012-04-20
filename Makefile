@@ -1,4 +1,5 @@
 DATABASE_NAME = officehours
+DATABASE_URL = postgresql://admin@localhost/$(DATABASE_NAME)
 
 all: virtualenv install
 
@@ -22,3 +23,6 @@ dropdb:
 
 test:
 	source bin/activate && python test.py
+
+dbversion:
+	source bin/activate && python migrations/manage.py db_version $(DATABASE_URL) migrations
