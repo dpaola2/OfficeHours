@@ -19,6 +19,11 @@ class Day(Base):
     def __repr__(self):
         return "<Day %s>" % str(self.date)
 
+    @staticmethod
+    def days_ahead(limit):
+        sess = Session()
+        return sess.query(Day).order_by(Day.date).limit(limit).all()
+
 class Slot(Base):
     __tablename__ = 'slots'
     id = Column(Integer, primary_key = True)
