@@ -31,4 +31,3 @@ class Slot(Base):
     def __repr__(self):
         return "<Slot %s for day: %s>" % (self.id, str(self.day.date))
     
-Base.metadata.create_all(engine)

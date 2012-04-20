@@ -1,5 +1,7 @@
 DATABASE_NAME = officehours
 DATABASE_URL = postgresql://admin@localhost/$(DATABASE_NAME)
+MIGRATIONS_REPO = migrations
+MIGRATE_PATH = migrations/manage.py
 
 all: virtualenv install
 
@@ -21,8 +23,14 @@ createdb:
 dropdb:
 	dropdb $(DATABASE_NAME)
 
-test:
-	source bin/activate && python test.py
+migrate:
+	source bin/activate && python $(MIGRATE_PATH) upgrade $(DATABASE_URL) $(MIGRATIONS_REPO)
+
+version:
+	source bin/activate && python $(MIGRATE_PATH) version $(MIGRATIONS_REPO)
+
+testmigrate:
+	source bin/activate && python $(MIGRATE_PATH) test $(DATABASE_URL) $(MIGRATIONS_REPO)
 
 dbversion:
-	source bin/activate && python migrations/manage.py db_version $(DATABASE_URL) migrations
+	source bin/activate && python $(MIGRATE_PATH) db_version $(DATABASE_URL) $(MIGRATIONS_REPO)
