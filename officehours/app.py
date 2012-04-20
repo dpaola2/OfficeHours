@@ -31,6 +31,9 @@ def reserve(slot_id):
     if slot is None:
         return "Invalid slot"
 
+    if slot.reserved:
+        return "already reserved"
+    
     slot.reserve(attrs)
     sess.add(slot)
     sess.commit()
