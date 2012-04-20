@@ -6,13 +6,14 @@ meta = MetaData()
 day = Table(
     'days', meta,
     Column('id', Integer, primary_key = True),
-    Column('date', Date)
+    Column('date', Date, unique = True)
 )
 
 slot = Table(
     'slots', meta,
     Column('id', Integer, primary_key = True),
-    Column('day_id', Integer, ForeignKey('days.id'))
+    Column('day_id', Integer, ForeignKey('days.id')),
+    Column('when', DateTime, unique = True)
 )
 
 

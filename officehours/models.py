@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import Column, String, Integer, create_engine, Date, ForeignKey
+from sqlalchemy import Column, String, Integer, create_engine, Date, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
 
@@ -29,10 +29,24 @@ class Slot(Base):
     id = Column(Integer, primary_key = True)
     day_id = Column(Integer, ForeignKey('days.id'))
     day = relationship("Day", backref = backref('slots', order_by=id))
+    when = Column(DateTime, unique = True)
 
-    def __init__(self, day):
+    def __init__(self, day, when):
         self.day = day
+        self.when = when
 
     def __repr__(self):
         return "<Slot %s for day: %s>" % (self.id, str(self.day.date))
-    
+
+    @staticmethod
+    def from_datetime(when):
+        sess = Session()
+        day = sess.query(Day).filter_by(date=when.date()).scalar()
+        if day is None:
+            day = Day(when.date())
+            sess.add(day)
+
+        slot = Slot(day, when)
+        sess.add(slot)
+        sess.commit()
+        return slot
